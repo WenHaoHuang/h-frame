@@ -5,7 +5,7 @@
  */
 
 export default {
-  name: 'HFrameMenu',
+  name: "HFrameMenu",
   props: {
     menuList: {
       type: Array,
@@ -13,20 +13,20 @@ export default {
     },
     mode: {
       type: String,
-      default: 'vertical'
+      default: "vertical"
     },
     defaultActive: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   render() {
-    const {menuList, mode, defaultActive} = this;
+    const { menuList, mode, defaultActive } = this;
 
     const menuFun = (list, pIndex) => {
       const data = [];
       list.forEach((item, index) => {
-        const {name, routerName, path, href, icon, children} = item;
+        const { name, routerName, path, href, icon, children } = item;
         let menuItem = null;
         const itemIndex = pIndex ? `${pIndex}-${index}` : `${index}`;
         if (children && children.length) {
@@ -35,7 +35,7 @@ export default {
           menuItem = (
             <el-submenu index={path || itemIndex}>
               <template slot="title">
-                {icon ? <i class={icon} /> : ''}
+                {icon ? <i class={icon} /> : ""}
                 <span>{name}</span>
               </template>
               {menuChild}
@@ -44,14 +44,14 @@ export default {
         } else if (href) {
           menuItem = (
             <a target="_blank" href={href} class="el-menu-item">
-              {icon ? <i class={icon} /> : ''}
+              {icon ? <i class={icon} /> : ""}
               <span>{name}</span>
             </a>
           );
         } else {
           menuItem = (
             <el-menu-item index={path || itemIndex} route={routerName || path}>
-              {icon ? <i class={icon} /> : ''}
+              {icon ? <i class={icon} /> : ""}
               <span slot="title">{name}</span>
             </el-menu-item>
           );
@@ -63,6 +63,16 @@ export default {
 
     const templateChild = menuFun(menuList);
 
-    return <el-menu mode={mode} defaultActive={defaultActive} router={true} uniqueOpened={true}>{templateChild}</el-menu>;
+    return (
+      <el-menu
+        class="h-frame--menu"
+        mode={mode}
+        defaultActive={defaultActive}
+        router={true}
+        uniqueOpened={true}
+      >
+        {templateChild}
+      </el-menu>
+    );
   }
 };

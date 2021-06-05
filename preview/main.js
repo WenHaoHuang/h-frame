@@ -15,10 +15,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './style.stylus'
 import HFrame from './../src/index.js'
+import router from './router.js'
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, {size: 'small'})
 Vue.use(HFrame)
 
 export default new Vue({
+  router,
   render: h => h(App)
 }).$mount('#app')

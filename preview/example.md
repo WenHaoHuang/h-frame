@@ -1,7 +1,8 @@
 :::title
-## HFrame 基于element-ui的后台管理系统框架快速搭建组件
 
-基于element-ui的后台管理系统框架快速搭建组件
+## HFrame 基于 element-ui 的后台管理系统框架快速搭建组件
+
+基于 element-ui 的后台管理系统框架快速搭建组件
 
 :::
 
@@ -13,13 +14,28 @@
 
 ```html
 <template>
-  <h-frame />
+  <h-frame :menu-list="menuList" user-name="HFrame" default-active="/center/order">
+    <h-page>template</h-page>
+  </h-frame>
 </template>
 
 <script>
   export default {
     data() {
-      return {};
+      return {
+        menuList: [
+          { path: "/", name: "我的工作台", icon: "el-icon-s-home" },
+          {
+            path: "/center",
+            name: "处理中心",
+            icon: "el-icon-bell",
+            children: [
+              { path: "/center/message", name: "消息中心" },
+              { path: "/center/order", name: "订单管理" }
+            ]
+          }
+        ]
+      };
     },
     methods: {}
   };
@@ -32,6 +48,6 @@
 
 ### Options
 
-| 名称 | 说明 | 类型 | 可选值 | 默认值 |
-| ------ | ---------- | ------ | ------ | ---- |
-| config | 说明 | object | - | - |
+| 名称   | 说明 | 类型   | 可选值 | 默认值 |
+| ------ | ---- | ------ | ------ | ------ |
+| config | 说明 | object | -      | -      |
