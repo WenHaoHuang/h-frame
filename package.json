@@ -1,6 +1,6 @@
 {
   "name": "h-frame",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "基于element-ui的后台管理系统框架快速搭建组件",
   "main": "lib/index.js",
   "files": [
