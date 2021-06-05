@@ -1,0 +1,118 @@
+{
+  "name": "h-frame",
+  "version": "0.0.1",
+  "description": "基于element-ui的后台管理系统框架快速搭建组件",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "bootstrap": "npm install",
+    "start": "npm run bootstrap && npm run dev",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "build": "npm run log && npm run build:lib && npm run build:doc",
+    "build:lib": "cross-env NODE_ENV=production webpack --config build/webpack.lib.conf.js",
+    "build:doc": "cross-env NODE_ENV=production webpack --config build/webpack.doc.conf.js",
+    "lint": "eslint --ext .js,.vue src",
+    "lintfix": "eslint --fix --ext .js,.vue src",
+    "log": "changelog-sn -i CHANGELOG.md -s -r 2",
+    "cz": "git add . && git cz",
+    "pub": "npm run bootstrap && npm run lint && sh build/git-release.sh && sh build/release.sh"
+  },
+  "keywords": [
+    "vue",
+    "component"
+  ],
+  "author": "黄文浩(huangwenhao23@163.com)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WenHaoHuang/h-frame.git"
+  },
+  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/WenHaoHuang/h-frame/issues"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./.czconfigrc.js"
+    }
+  },
+  "engines": {
+    "node": ">= 8.9.1",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "element-ui": "2.15.2",
+    "vue": "2.6.11",
+    "@babel/core": "7.10.2",
+    "@babel/plugin-transform-runtime": "7.10.1",
+    "@babel/preset-env": "7.10.2",
+    "@babel/runtime": "7.10.2",
+    "babel-helper-vue-jsx-merge-props": "2.0.3",
+    "@vue/babel-helper-vue-jsx-merge-props": "1.0.0",
+    "@vue/babel-preset-jsx": "1.1.2",
+    "autoprefixer": "9.8.0",
+    "axios": "0.19.2",
+    "babel-eslint": "10.1.0",
+    "babel-loader": "8.1.0",
+    "cache-loader": "4.1.0",
+    "chalk": "4.0.0",
+    "changelog-sn": "2.1.8",
+    "clean-webpack-plugin": "3.0.0",
+    "compression-webpack-plugin": "4.0.0",
+    "cross-env": "7.0.2",
+    "css-loader": "3.5.3",
+    "eslint": "7.2.0",
+    "eslint-friendly-formatter": "4.0.1",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-vue": "6.2.2",
+    "file-loader": "6.0.0",
+    "friendly-errors-webpack-plugin": "1.7.0",
+    "html-webpack-plugin": "4.3.0",
+    "markdown-it": "8.4.1",
+    "markdown-it-anchor": "5.0.2",
+    "markdown-it-chain": "1.3.0",
+    "markdown-it-container": "2.0.0",
+    "node-notifier": "7.0.1",
+    "node-sass": "4.14.1",
+    "ora": "4.0.4",
+    "portfinder": "1.0.26",
+    "postcss-import": "12.0.1",
+    "postcss-loader": "3.0.0",
+    "postcss-url": "8.0.0",
+    "sass-loader": "^8.0.2",
+    "select-version-cli": "0.0.2",
+    "shelljs": "0.8.4",
+    "stylus": "0.54.7",
+    "stylus-loader": "3.0.2",
+    "terser-webpack-plugin": "3.0.3",
+    "thread-loader": "2.1.3",
+    "transliteration": "1.1.11",
+    "url-loader": "4.1.0",
+    "vue-loader": "15.9.6",
+    "vue-style-loader": "4.1.2",
+    "vue-template-compiler": "2.6.11",
+    "webpack": "4.43.0",
+    "webpack-bundle-analyzer": "3.8.0",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.11.0",
+    "webpack-merge": "4.2.2",
+    "webpack-node-externals": "2.5.2"
+  }
+}

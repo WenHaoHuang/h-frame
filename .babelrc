@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "@vue/babel-preset-jsx",
+    [
+      "@babel/preset-env",
+      {
+        "modules": false,
+        "targets": {
+          "browsers": ["> 1%", "last 2 version", " not ie <= 8"]
+        }
+      }
+    ]
+  ],
+  "plugins": ["@babel/plugin-transform-runtime"]
+}
