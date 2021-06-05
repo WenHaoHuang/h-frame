@@ -14,4 +14,4 @@ if (typeof window !== "undefined" && window.Vue) {
   install(window.Vue);
 }
 
-export default { HFrame, HPage };
+export default HFrame;

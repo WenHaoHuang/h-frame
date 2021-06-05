@@ -18,7 +18,7 @@ then
   git push origin refs/tags/v$VERSION
   # doc
   npm run log
-  npm run build:doc
+  # npm run build:doc
   git add -A
   git commit -m "docs(docs): $VERSION"
   git push
