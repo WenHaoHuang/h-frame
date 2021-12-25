@@ -1,5 +1,8 @@
 <template>
-  <div class="h-frame">
+  <div
+    class="h-frame"
+    :class="`theme-${theme}`"
+  >
     <div class="h-frame--header">
       <div class="h-frame--logo">
         <slot name="logo">
@@ -139,6 +142,10 @@ export default {
       type: String,
       default: '',
     },
+    theme: {
+      type: String,
+      default: 'light'
+    }
   },
   computed: {
     hasMenu() {

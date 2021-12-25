@@ -14,7 +14,14 @@
 
 ```html
 <template>
-  <h-frame :menu-list="menuList" user-name="HFrame" default-active="/center/order">
+  <h-frame
+    :menu-list="menuList"
+    user-name="HFrame"
+    default-active="/center/order"
+    :theme="theme"
+    :command-list="commandList"
+    @on-command="onCommand"
+  >
     <h-page>template</h-page>
   </h-frame>
 </template>
@@ -34,10 +41,22 @@
               { path: "/center/order", name: "订单管理" }
             ]
           }
-        ]
+        ],
+        commandList: [
+          { label: '切换主题', command: 'theme', icon: 'el-icon-setting'}
+        ],
+        theme: 'dark'
       };
     },
-    methods: {}
+    methods: {
+      onCommand(command) {
+        console.log('command', command)
+        if (command === 'theme') {
+          this.theme = this.theme === 'light' ? 'dark' : 'light'
+          console.log('theme', this.theme)
+        }
+      }
+    }
   };
 </script>
 ```

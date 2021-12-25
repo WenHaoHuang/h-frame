@@ -1,77 +1,114 @@
 @import "mixins/mixins";
 @import "common/var";
 
-$--frame-color-bg: #f0f2f5;
-$--frame-width-side: 220px;
-$--frame-height-header: 48px;
-$--frame-color-bg-header: #fff;
-$--frame-color-menu-active: #2e3f97;
-
 html * {
   box-sizing: border-box;
 }
 
 @include b(frame) {
+  --h-frame-width-side: 220px;
+  --h-frame-height-header: 48px;
+
+  --h-frame-color-bg: #f0f2f5;
+  --h-frame-color-bg-header: #fff;
+
+  --h-frame-logo-bg: #fff;
+  --h-frame-color-logo: #409EFF;
+  --h-frame-logo-driver-color: #f0f2f5;
+
+  --h-frame-color-menu-item: #303133;
+  --h-frame-color-menu-active: #409EFF;
+  --h-frame-menu-active-bg: rgba(27, 133, 255, 0.1);
+
+  // &.theme-light {
+  //   --h-frame-color-bg: #f0f2f5;
+  //   --h-frame-color-bg-header: #fff;
+  //   --h-frame-color-menu-active: #2e3f97;
+  // }
+  &.theme-dark {
+    --h-frame-color-bg: #f0f2f5;
+    --h-frame-color-bg-header: #fff;
+
+    --h-frame-logo-bg: #36393D;
+    --h-frame-color-logo: #fff;
+    --h-frame-logo-driver-color: #2d3033;
+
+    --h-frame-color-menu-item: rgba(255, 255, 255, .6);
+    --h-frame-color-menu-active: #fff;
+    --h-frame-menu-active-bg: rgba(27, 133, 255, .5);
+  }
+
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: $--frame-color-bg;
+  background-color: var(--h-frame-color-bg);
 
   @include m(header) {
     position: relative;
     z-index: 5;
-    height: $--frame-height-header;
-    background-color: $--frame-color-bg-header;
+    height: var(--h-frame-height-header);
+    background-color: var(--h-frame-color-bg-header);
     display: grid;
-    grid-template-columns: $--frame-width-side 1fr;
+    grid-template-columns: var(--h-frame-width-side) 1fr;
     align-items: center;
+
     &__main {
-      height: $--frame-height-header;
+      height: var(--h-frame-height-header);
       display: flex;
       justify-content: space-between;
-      box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+      // box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+
       &.has-menu {
         color: #fff;
         background-color: $--menu-background-color;
+
         .h-frame--header__user {
           color: rgba(#fff, 0.6);
+
           &:hover {
-            > .username-item {
+            >.username-item {
               color: #fff;
             }
           }
         }
       }
     }
+
     &__side {
-      height: $--frame-height-header;
+      height: var(--h-frame-height-header);
       display: flex;
       align-items: center;
     }
+
     &__breadcrumb {
       padding-left: 20px;
       display: flex;
       align-items: center;
     }
+
     &__menu {
       display: flex;
       align-items: flex-end;
     }
+
     &__user {
-      height: $--frame-height-header;
+      height: var(--h-frame-height-header);
       padding: 0 20px;
       color: rgba(#000, 0.6);
       display: flex;
       align-items: center;
       cursor: pointer;
-      > .el-avatar {
+
+      >.el-avatar {
         background-color: #5ca4f7;
       }
-      > .username-item {
+
+      >.username-item {
         margin: 0 5px;
       }
+
       &:hover {
-        > .username-item {
+        >.username-item {
           color: #333;
         }
       }
@@ -79,30 +116,32 @@ html * {
   }
 
   @include m(logo) {
-    height: $--frame-height-header;
-    width: $--frame-width-side;
+    height: var(--h-frame-height-header);
+    width: var(--h-frame-width-side);
     display: flex;
     padding: 0 0 0 22px;
     align-items: center;
-    color: $--color-primary;
+    color: var(--h-frame-color-logo);
+    background-color: var(--h-frame-logo-bg);
     font-size: 18px;
     font-weight: 500;
     overflow: hidden;
-    // background-color: $--frame-color-menu-active;
-    // border-bottom: 1px solid $--frame-color-menu-active;
+    background-color: var(--h-frame-logo-bg);
+    border-bottom: 1px solid var(--h-frame-logo-driver-color);
   }
 
   @include m(body) {
     display: flex;
-    height: calc(100% - #{$--frame-height-header});
+    height: calc(100% - #{var(--h-frame-height-header)});
   }
 
   @include m(side) {
-    width: $--frame-width-side;
+    width: var(--h-frame-width-side);
     height: 100%;
-    background-color: $--menu-background-color;
-    & + .h-frame--main {
-      width: calc(100% - #{$--frame-width-side});
+    background-color: var(--h-frame-logo-bg);
+
+    &+.h-frame--main {
+      width: calc(100% - #{var(--h-frame-width-side)});
     }
   }
 
@@ -111,22 +150,31 @@ html * {
     height: 100%;
     overflow: hidden;
   }
+
   // 菜单样式定制
-  &--menu {
+  .el-menu {
+    border-right: 0 none;
+    background-color: var(--h-frame-logo-bg);
+
     .el-menu-item,
     .el-submenu__title {
       height: 40px;
       line-height: 40px;
+      color: var(--h-frame-color-menu-item);
+
       &:focus,
       &:hover {
-        color: $--color-primary;
+        color: var(--h-frame-color-menu-active);
         background-color: transparent;
       }
     }
+
     .el-menu-item {
       &.is-active {
         position: relative;
-        background-color: rgba(#3788ee, 0.1);
+        color: var(--h-frame-color-menu-active);
+        background-color: var(--h-frame-menu-active-bg);
+
         &:before {
           position: absolute;
           z-index: 2;
@@ -146,6 +194,7 @@ html * {
   position: relative;
   height: 100%;
   background-color: #f0f2f5;
+
   &:before {
     content: "";
     position: absolute;
@@ -158,12 +207,14 @@ html * {
     pointer-events: none;
     user-select: none;
   }
+
   @include e(wrap) {
     display: grid;
     grid-gap: 20px;
     grid-auto-columns: minmax(100px, auto);
     background-color: #fff;
   }
+
   @include e(header) {
     height: 48px;
     padding: 0 20px;
@@ -171,15 +222,18 @@ html * {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    & + .h-page__main {
+
+    &+.h-page__main {
       padding-top: 0;
       border-top: 10px solid #f0f2f5;
     }
   }
+
   @include e(main) {
     padding: 10px;
     position: relative;
   }
+
   @include e(command) {
     height: 48px;
     flex: 1;
@@ -187,14 +241,17 @@ html * {
     align-items: center;
     justify-content: flex-end;
   }
+
   @include when(bottom) {
     &:before {
       bottom: 58px;
     }
+
     @include e(main) {
       padding-bottom: 58px;
     }
   }
+
   @include e(footer) {
     position: absolute;
     z-index: 10;
