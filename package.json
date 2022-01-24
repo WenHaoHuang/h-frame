@@ -14,7 +14,7 @@
     "lintfix": "eslint --fix --ext .js,.vue src",
     "log": "changelog-sn -i CHANGELOG.md -s -r 2",
     "cz": "git add . && git cz",
-    "pub": "cd dist && npm publish"
+    "pub": "cd dist && npm publish --access=public"
   },
   "keywords": [
     "vue",
