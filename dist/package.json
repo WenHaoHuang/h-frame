@@ -1,6 +1,6 @@
 {
   "name": "@hg-ui/h-frame",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "基于element-plus的后台管理系统框架快速搭建组件",
   "exports": {
     ".": {
@@ -8,16 +8,13 @@
       "import": "./lib/index.es.js"
     },
     "./es": "./lib/index.es.js",
-    "./lib": "./lib/index.umd.js"
+    "./umd": "./lib/index.umd.js",
+    "./index.css": "./lib/index.css"
   },
   "main": "lib/index.umd.js",
   "module": "lib/index.es.js",
   "style": "lib/index.css",
   "types": "types/index.d.ts",
-  "files": [
-    "lib",
-    "types"
-  ],
   "keywords": [
     "vue",
     "component",
