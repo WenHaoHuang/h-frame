@@ -1,77 +1,65 @@
 <template>
-  <div
-    class="h-page"
-    :class="{'is-bottom': showCommandFoot}"
-    :style="style"
-  >
+  <article :class="['h-page', {'is-bottom': showCommandFoot}]">
     <el-scrollbar
       wrap-style="overflowX:hidden;"
       style="height:100%;"
     >
-      <div
+      <section
+        class="h-page--header"
         v-if="showHeader"
-        class="h-page__header"
       >
         <div
+          class="h-page--breadcrumb"
           v-if="breadcrumb"
-          class="h-page__breadcrumb"
         >
           <slot name="breadcrumb">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb>
               <el-breadcrumb-item
                 v-for="(item, index) in levelList"
                 :key="index"
+                :to="(index === levelList.length - 1 || !item.path || (item.meta && item.meta.redirect === true)) ? undefined : item"
               >
-                <span
-                  v-if="index === levelList.length - 1 || !item.path || (item.meta && item.meta.redirect === true)"
-                  class="no-redirect"
-                >{{ item.title || item.meta.title }}</span>
-                <router-link
-                  v-else
-                  :to="item.path"
-                >
-                  {{ item.title || item.meta.title }}
-                </router-link>
+                {{ item.meta.title }}
               </el-breadcrumb-item>
             </el-breadcrumb>
           </slot>
         </div>
         <div
+          class="h-page--command"
           v-if="showCommandHead"
-          class="h-page__command"
         >
           <slot name="command">
             <el-button
               v-for="command in commands"
               :key="command.command"
               v-bind="command.props"
-              v-on="command.on"
+              v-on="{...command.on}"
               @click="() => {onCommand(command.command, command)}"
             >
               {{ command.label }}
             </el-button>
           </slot>
         </div>
-      </div>
-      <div class="h-page__main">
+      </section>
+      <section class="h-page--main">
         <div
-          class="h-page__wrap"
+          class="h-page--wrap"
           :class="wrapClass"
           :style="styleWrap"
         >
           <slot />
         </div>
-      </div>
+      </section>
       <div
+        class="h-page--footer"
         v-if="showCommandFoot"
-        class="h-page__footer"
       >
         <slot name="command">
           <el-button
             v-for="command in commands"
             :key="command.command"
             v-bind="command.props"
-            v-on="command.on"
+            v-on="{...command.on}"
             @click="() => {onCommand(command.command, command)}"
           >
             {{ command.label }}
@@ -79,82 +67,72 @@
         </slot>
       </div>
     </el-scrollbar>
-  </div>
+  </article>
 </template>
-<script>
-export default {
+
+<script lang="ts">
+import { 
+  defineComponent,
+  computed,
+  getCurrentInstance,
+} from 'vue'
+import { pageProps, pageEmits } from './page'
+import type { CommandType, Style } from './page'
+import type { RouteLocation } from 'vue-router'
+
+import './style/page.scss'
+
+export default defineComponent({
   name: 'HPage',
-  props: {
-    backgroundColor: {
-      type: String,
-      default: undefined,
-    },
-    padding: {
-      type: String,
-      default: '20px',
-    },
-    gap: {
-      type: Number,
-      default: 20,
-    },
-    breadcrumb: {
-      type: Boolean,
-      default: false,
-    },
-    commands: {
-      type: Array,
-      default: () => [],
-    },
-    isBottom: {
-      type: Boolean,
-      default: () => {},
-    },
-    wrapClass: {
-      type: String,
-      default: '',
-    },
-  },
-  computed: {
-    style() {
-      const data = {}
-      if (this.backgroundColor) {
-        data.backgroundColor = this.backgroundColor
+
+  props: pageProps,
+  emits: pageEmits,
+
+  setup(props, context) {
+    // 样式
+    const styleWrap = computed(() => {
+      const sty: Style = {}
+      if (props.padding) {
+        sty.padding = props.padding
       }
-      return data
-    },
-    styleWrap() {
-      const data = {}
-      if (this.padding) {
-        data.padding = this.padding
+      if (props.gap !== 20) {
+        sty.gridGap = props.gap + 'px'
       }
-      if (this.gap !== 20) {
-        data.gridGap = `${this.gap}px`
-      }
-      return data
-    },
-    levelList() {
-      const matched = this.$route.matched.filter((item) => item.meta && item.meta.title && !item.meta.hideBreadcrumb)
-      return matched
-    },
-    showHeader() {
-      return this.breadcrumb || this.showCommandHead
-    },
-    showCommand() {
-      const hasCommands = this.commands && this.commands.length
-      const hasSlot = this.$slots.command || this.$scopedSlots.command
+      return sty
+    })
+    const showCommand = computed(() => {
+      const hasCommands = props.commands?.length
+      const hasSlot = context.slots.command
       return hasCommands || hasSlot
-    },
-    showCommandHead() {
-      return this.showCommand && !this.isBottom
-    },
-    showCommandFoot() {
-      return this.showCommand && this.isBottom
-    },
-  },
-  methods: {
-    onCommand(command, item) {
-      this.$emit('on-command', command, item)
-    },
-  },
-}
+    })
+    const showCommandHead = computed(() => showCommand.value && !props.isBottom)
+    const showCommandFoot = computed(() => showCommand.value && props.isBottom)
+    const showHeader = computed(() => props.breadcrumb || showCommandHead.value)
+    // 面包屑
+    // eslint-disable-next-line
+    const instance = getCurrentInstance()!
+    const route = instance.appContext.config.globalProperties.$route as RouteLocation
+    const levelList = computed(() => {
+      if (!route) {
+        return []
+      }
+      const matched = route.matched.filter((item) => item.meta && item.meta.title && !item.meta.hideBreadcrumb)
+      return matched
+    })
+    // 事件触发
+    const onCommand = (command: string, item: CommandType) => {
+      context.emit('on-command', command, item)
+    }
+
+    return {
+      styleWrap,
+      showCommand,
+      showCommandHead,
+      showCommandFoot,
+      showHeader,
+      levelList,
+      onCommand
+    }
+  }
+})
 </script>

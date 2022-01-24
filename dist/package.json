@@ -1,0 +1,57 @@
+{
+  "name": "@hg-ui/h-frame",
+  "version": "0.1.0",
+  "description": "基于element-plus的后台管理系统框架快速搭建组件",
+  "exports": {
+    ".": {
+      "require": "./lib/index.umd.js",
+      "import": "./lib/index.es.js"
+    },
+    "./es": "./lib/index.es.js",
+    "./lib": "./lib/index.umd.js"
+  },
+  "main": "lib/index.umd.js",
+  "module": "lib/index.es.js",
+  "style": "lib/index.css",
+  "types": "types/index.d.ts",
+  "files": [
+    "lib",
+    "types"
+  ],
+  "keywords": [
+    "vue",
+    "component",
+    "frame",
+    "page"
+  ],
+  "author": "WenHao.Huang(huangwenhao23@163.com)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WenHaoHuang/h-frame.git"
+  },
+  "homepage": "",
+  "bugs": {
+    "url": "https://github.com/WenHaoHuang/h-frame/issues"
+  },
+  "engines": {
+    "node": ">= 8.9.1",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "peerDependencies": {
+    "vue": "3.2.26",
+    "element-plus": "1.3.0-beta.7"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "vetur": {
+    "tags": "tags.json",
+    "attributes": "attributes.json"
+  },
+  "web-types": "web-types.json"
+}

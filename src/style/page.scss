@@ -1,0 +1,76 @@
+@use 'sass:map';
+@use './var';
+
+@use 'mixins/var' as *;
+@use 'mixins/mixins' as *;
+@use 'reset.scss' as *;
+
+@include b(page) {
+  /* do something */
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f2f5;
+  &::before {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    z-index: 0;
+    pointer-events: none;
+    content: '';
+    user-select: none;
+    background-color: #fff;
+  }
+  @include m(header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: get-var('height-header');
+    padding: 0 10px;
+    background-color: #fff;
+    /* stylelint-disable-next-line */
+    & + .h-page--main {
+      padding-top: 0;
+      border-top: 10px solid #f0f2f5;
+    }
+  }
+  @include m(main) {
+    position: relative;
+    padding: 10px;
+  }
+  @include m(wrap) {
+    display: grid;
+    grid-auto-columns: minmax(100px, auto);
+    grid-gap: 20px;
+    padding: 20px;
+    background-color: #fff;
+  }
+  @include m(footer) {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: get-var('height-header');
+    padding: 0 10px;
+    background-color: #fff;
+    box-shadow: 0 0 4px rgb(0 0 0 / 12%);
+  }
+  @include when(bottom) {
+    &::before {
+      bottom: calc(10px + #{get-var('height-header')});
+    }
+    & {
+      @include b(page) {
+        @include m(main) {
+          padding-bottom: calc(10px + #{get-var('height-header')})
+        }
+      }
+    }
+  }
+}

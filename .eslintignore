@@ -1,0 +1,7 @@
+node_modules
+dist
+preview/build/
+packages/*/es
+packages/*/lib
+pnpm-lock.yaml
+!.*

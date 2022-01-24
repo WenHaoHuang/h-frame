@@ -1,0 +1,19 @@
+# 其他类型文件
+*.js
+*.jsx
+*.ts
+*.tsx
+*.jpg
+*.woff
+​
+# 公用样式处理方法
+/src/style/mixins/
+
+# 测试和打包目录
+/mock/
+/dist/
+/lib/
+/node_modules/
+/.git/
+/.vscode/
+/.cache/

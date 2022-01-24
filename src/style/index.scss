@@ -1,269 +1,161 @@
-@import "mixins/mixins";
-@import "common/var";
+@use 'sass:map';
+@use './var';
 
-html * {
-  box-sizing: border-box;
-}
+@use 'mixins/var' as *;
+@use 'mixins/mixins' as *;
+@use 'reset.scss' as *;
 
 @include b(frame) {
-  --h-frame-width-side: 220px;
-  --h-frame-height-header: 48px;
-
-  --h-frame-color-bg: #f0f2f5;
-  --h-frame-color-bg-header: #fff;
-
-  --h-frame-logo-bg: #fff;
-  --h-frame-color-logo: #409EFF;
-  --h-frame-logo-driver-color: #f0f2f5;
-
-  --h-frame-color-menu-item: #303133;
-  --h-frame-color-menu-active: #409EFF;
-  --h-frame-menu-active-bg: rgba(27, 133, 255, 0.1);
-
-  // &.theme-light {
-  //   --h-frame-color-bg: #f0f2f5;
-  //   --h-frame-color-bg-header: #fff;
-  //   --h-frame-color-menu-active: #2e3f97;
-  // }
-  &.theme-dark {
-    --h-frame-color-bg: #f0f2f5;
-    --h-frame-color-bg-header: #fff;
-
-    --h-frame-logo-bg: #36393D;
-    --h-frame-color-logo: #fff;
-    --h-frame-logo-driver-color: #2d3033;
-
-    --h-frame-color-menu-item: rgba(255, 255, 255, .6);
-    --h-frame-color-menu-active: #fff;
-    --h-frame-menu-active-bg: rgba(27, 133, 255, .5);
+  @include set-var($frame);
+  &.theme-light {
+    @include set-var($frameLight);
+  }
+  * {
+    box-sizing: border-box;
   }
 
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: var(--h-frame-color-bg);
-
   @include m(header) {
-    position: relative;
-    z-index: 5;
-    height: var(--h-frame-height-header);
-    background-color: var(--h-frame-color-bg-header);
-    display: grid;
-    grid-template-columns: var(--h-frame-width-side) 1fr;
+    display: flex;
     align-items: center;
-
-    &__main {
-      height: var(--h-frame-height-header);
-      display: flex;
-      justify-content: space-between;
-      // box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
-
-      &.has-menu {
-        color: #fff;
-        background-color: $--menu-background-color;
-
-        .h-frame--header__user {
-          color: rgba(#fff, 0.6);
-
-          &:hover {
-            >.username-item {
-              color: #fff;
-            }
-          }
-        }
-      }
-    }
-
-    &__side {
-      height: var(--h-frame-height-header);
-      display: flex;
-      align-items: center;
-    }
-
-    &__breadcrumb {
-      padding-left: 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    &__menu {
-      display: flex;
-      align-items: flex-end;
-    }
-
-    &__user {
-      height: var(--h-frame-height-header);
-      padding: 0 20px;
-      color: rgba(#000, 0.6);
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-
-      >.el-avatar {
-        background-color: #5ca4f7;
-      }
-
-      >.username-item {
-        margin: 0 5px;
-      }
-
-      &:hover {
-        >.username-item {
-          color: #333;
-        }
-      }
+    height: get-var('height-header');
+  }
+  @include m(header__main) {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    height: get-var('height-header');
+  }
+  @include m(header__side) {
+    display: flex;
+    align-items: center;
+    height: get-var('height-header');
+  }
+  @include m(header__user) {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: get-var('height-header');
+    padding: 0 10px;
+    cursor: pointer;
+    > .el-avatar {
+      background-color: var(--el-color-primary, #1b85ff)
     }
   }
-
+  @include m(header__breadcrumb) {
+    display: flex;
+    align-items: center;
+    height: get-var('height-header');
+    padding: 0 10px;
+  }
   @include m(logo) {
-    height: var(--h-frame-height-header);
-    width: var(--h-frame-width-side);
     display: flex;
-    padding: 0 0 0 22px;
     align-items: center;
-    color: var(--h-frame-color-logo);
-    background-color: var(--h-frame-logo-bg);
-    font-size: 18px;
-    font-weight: 500;
-    overflow: hidden;
-    background-color: var(--h-frame-logo-bg);
-    border-bottom: 1px solid var(--h-frame-logo-driver-color);
+    width: get-var('width-menu');
+    height: get-var('height-header');
+    padding: 0 10px;
+    color: get-var('color-font-logo');
+    background-color: get-var('color-bg-logo');
   }
-
   @include m(body) {
-    display: flex;
-    height: calc(100% - #{var(--h-frame-height-header)});
-  }
-
-  @include m(side) {
-    width: var(--h-frame-width-side);
-    height: 100%;
-    background-color: var(--h-frame-logo-bg);
-
-    &+.h-frame--main {
-      width: calc(100% - #{var(--h-frame-width-side)});
+    position: relative;
+    height: calc(100% - get-var('height-header'));
+    padding-left: get-var('width-menu');
+    @include when(fullscreen) {
+      padding-left: 0;
+    }
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 15;
+      height: 6px;
+      content: '';
+      background: linear-gradient(
+        to bottom,
+        get-var('color-shadow'),
+        rgb(255 255 255 / 0%)
+      );
     }
   }
-
+  @include m(side) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 12;
+    width: get-var('width-menu');
+    height: 100%;
+    background-color: get-var('color-bg-logo');
+    &::after {
+      position: absolute;
+      top: 0;
+      right: -6px;
+      bottom: 0;
+      z-index: 15;
+      width: 6px;
+      content: '';
+      background: linear-gradient(
+        to right,
+        get-var('color-shadow'),
+        rgb(255 255 255 / 0%)
+      );
+    }
+  }
   @include m(main) {
     width: 100%;
     height: 100%;
     overflow: hidden;
   }
-
-  // 菜单样式定制
-  .el-menu {
-    border-right: 0 none;
-    background-color: var(--h-frame-logo-bg);
-
-    .el-menu-item,
-    .el-submenu__title {
-      height: 40px;
-      line-height: 40px;
-      color: var(--h-frame-color-menu-item);
-
-      &:focus,
-      &:hover {
-        color: var(--h-frame-color-menu-active);
-        background-color: transparent;
-      }
+  @include m(menu) {
+    &,
+    .el-menu {
+      --el-menu-active-color: var(--hg-frame-color-font-menu-active);
+      --el-menu-text-color: var(--hg-frame-color-font-menu-base);
+      --el-menu-hover-text-color: var(--hg-frame-color-font-menu-base);
+      --el-menu-bg-color: var(--hg-frame-color-bg-logo);
+      --el-menu-hover-bg-color: var(--hg-frame-color-bg-menu-item-base);
+      --el-menu-item-height: 40px;
+      --el-menu-item-hover-fill: var(--hg-frame-color-bg-menu-item-base);
     }
-
-    .el-menu-item {
-      &.is-active {
-        position: relative;
-        color: var(--h-frame-color-menu-active);
-        background-color: var(--h-frame-menu-active-bg);
-
-        &:before {
-          position: absolute;
-          z-index: 2;
-          content: "";
-          top: 0;
-          right: 0;
-          bottom: 0;
-          width: 6px;
-          background-color: #3788ee;
+  }
+  @include m(menu) {
+    border-right: 0 none;
+    > .el-menu-item {
+      padding-left: 11px !important;
+    }
+    > .el-sub-menu {
+      > .el-sub-menu {
+        &__title {
+          padding-left: 11px !important;
         }
       }
     }
-  }
-}
-
-@include b(page) {
-  position: relative;
-  height: 100%;
-  background-color: #f0f2f5;
-
-  &:before {
-    content: "";
-    position: absolute;
-    z-index: 0;
-    left: 10px;
-    right: 10px;
-    top: 10px;
-    bottom: 10px;
-    background-color: #fff;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  @include e(wrap) {
-    display: grid;
-    grid-gap: 20px;
-    grid-auto-columns: minmax(100px, auto);
-    background-color: #fff;
-  }
-
-  @include e(header) {
-    height: 48px;
-    padding: 0 20px;
-    background-color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    &+.h-page__main {
-      padding-top: 0;
-      border-top: 10px solid #f0f2f5;
+    .el-menu-item {
+      position: relative;
+      text-decoration: none;
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        content: '';
+        background-color: rgb(255 255 255 / 0%);
+      }
+      @include when(active) {
+        background-color: var(--el-menu-hover-bg-color);
+        &::before {
+          background-color: var(--hg-frame-color-bg-menu-item-border);
+        }
+      }
     }
-  }
-
-  @include e(main) {
-    padding: 10px;
-    position: relative;
-  }
-
-  @include e(command) {
-    height: 48px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  @include when(bottom) {
-    &:before {
-      bottom: 58px;
+    .el-sub-menu .el-menu-item {
+      height: var(--el-menu-item-height);
+      line-height: var(--el-menu-item-height);
     }
-
-    @include e(main) {
-      padding-bottom: 58px;
-    }
-  }
-
-  @include e(footer) {
-    position: absolute;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 48px;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    background-color: #fff;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   }
 }

@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="h-frame"
-    :class="`theme-${theme}`"
-  >
+  <div :class="['h-frame', `theme-${theme}`]">
     <div class="h-frame--header">
       <div class="h-frame--logo">
         <slot name="logo">
@@ -11,7 +8,7 @@
       </div>
       <div
         class="h-frame--header__main"
-        :class="{'has-menu': menuPosition === 'top' && hasMenu}"
+        :class="{ 'has-menu': menuPosition === 'top' && hasMenu }"
       >
         <div
           v-if="menuPosition === 'top' && hasMenu"
@@ -30,64 +27,73 @@
           class="h-frame--header__breadcrumb"
         >
           <slot name="breadcrumb">
-            <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb v-if="levelList.length">
               <el-breadcrumb-item
                 v-for="(item, index) in levelList"
                 :key="index"
+                :to="(index === levelList.length - 1 || !item.path || (item.meta && item.meta.redirect === true)) ? undefined : item"
               >
-                <span
-                  v-if="index === levelList.length - 1 || !item.path || (item.meta && item.meta.redirect === true)"
-                  class="no-redirect"
-                >{{ item.title || item.meta.title }}</span>
-                <router-link
-                  v-else
-                  :to="item.path"
-                >
-                  {{ item.title || item.meta.title }}
-                </router-link>
+                {{ item.meta.title }}
               </el-breadcrumb-item>
             </el-breadcrumb>
           </slot>
         </div>
         <div class="h-frame--header__side">
+          <slot name="side" />
           <slot name="header">
             <el-dropdown
               v-if="userName"
               trigger="click"
               @command="onCommand"
             >
-              <template slot="default">
+              <template #default>
                 <div class="h-frame--header__user">
                   <el-avatar size="small">
-                    {{ userName.slice(0,1) }}
+                    {{ userName.slice(0, 1) }}
                   </el-avatar>
                   <span class="username-item">{{ userName }}</span>
-                  <i class="el-icon-caret-bottom" />
+                  <i>
+                    <svg
+                      class="icon"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 1024 1024"
+                      xmlns="http://www.w3.org/2000/svg"
+                      data-v-042ca774=""
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M192 384l320 384 320-384z"
+                      />
+                    </svg>
+                  </i>
                 </div>
               </template>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-for="(item, index) in commandList"
-                  :key="index"
-                  :icon="item.icon"
-                  :command="item.command"
-                >
-                  {{ item.label }}
-                </el-dropdown-item>
-                <el-dropdown-item
-                  :divided="commandList && commandList.length ? true : false"
-                  icon="el-icon-switch-button"
-                  command="logout"
-                >
-                  退出登录
-                </el-dropdown-item>
-              </el-dropdown-menu>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item
+                    v-for="(item, index) in commandList"
+                    :key="index"
+                    :icon="item.icon"
+                    :command="item.command"
+                  >
+                    {{ item.label }}
+                  </el-dropdown-item>
+                  <el-dropdown-item
+                    :divided="commandList?.length ? true : false"
+                    :icon="SwitchButton"
+                    command="logout"
+                  >
+                    退出登录
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
             </el-dropdown>
           </slot>
         </div>
       </div>
     </div>
-    <div class="h-frame--body">
+    <div :class="['h-frame--body', {'is-fullscreen': menuPosition !== 'side' || !hasMenu}]">
       <div
         v-if="menuPosition === 'side' && hasMenu"
         class="h-frame--side"
@@ -110,56 +116,52 @@
     </div>
   </div>
 </template>
+<script lang="ts">
+import {
+  defineComponent,
+  computed,
+  getCurrentInstance,
+} from 'vue'
+import type { RouteLocation } from 'vue-router'
+import { frameProps, frameEmits } from './main'
+import MenuDefault from './menu-default.jsx'
+import { SwitchButton, CaretBottom } from '@element-plus/icons-vue'
 
-<script>
-import MenuDefault from './menu.js'
+import './style/index.scss'
 
-export default {
+export default defineComponent({
   name: 'HFrame',
-  components: { MenuDefault },
-  props: {
-    title: {
-      type: String,
-      default: 'HightDesign',
-    },
-    menuList: {
-      type: Array,
-      default: () => [],
-    },
-    menuPosition: {
-      type: String,
-      default: 'side',
-    },
-    defaultActive: {
-      type: String,
-      default: '',
-    },
-    commandList: {
-      type: Array,
-      default: () => [],
-    },
-    userName: {
-      type: String,
-      default: '',
-    },
-    theme: {
-      type: String,
-      default: 'light'
-    }
+  components: {
+    MenuDefault
   },
-  computed: {
-    hasMenu() {
-      return this.menuList && this.menuList.length
-    },
-    levelList() {
-      const matched = this.$route.matched.filter((item) => item.meta && item.meta.title && !item.meta.hideBreadcrumb)
+
+  props: frameProps,
+  emits: frameEmits,
+
+  setup(props, context) {
+    // eslint-disable-next-line
+    const instance = getCurrentInstance()!
+    const route = instance.appContext.config.globalProperties.$route as RouteLocation
+    const hasMenu = computed(() => props.menuList?.length)
+    const levelList = computed(() => {
+      if (!route) {
+        return []
+      }
+      const matched = route.matched.filter((item) => item.meta && item.meta.title && !item.meta.hideBreadcrumb)
       return matched
-    },
-  },
-  methods: {
-    onCommand(command) {
-      this.$emit('on-command', command)
-    },
-  },
-}
+    })
+
+    const onCommand = (command) => {
+      context.emit('on-command', command)
+    }
+
+    return {
+      SwitchButton,
+      CaretBottom,
+      hasMenu,
+      levelList,
+      onCommand
+    }
+  }
+})
 </script>

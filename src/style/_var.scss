@@ -1,0 +1,43 @@
+/* Component Chalk Variables */
+@use 'sass:math';
+@use 'sass:map';
+
+@use './mixins/config';
+
+/* frame */
+$frame: () !default;
+$frame: map.merge(
+  (
+    'height-header': 48px,
+    'menu-item': 40px,
+    'width-menu': 220px,
+    'color-bg-base': #fff,
+    'color-bg-logo': #36393D,
+    'color-bg-menu-active': #2d3033,
+    'color-bg-menu-item-base': rgb(27 133 255 / 50%),
+    'color-bg-menu-item-border': #1b85ff,
+    'color-font-base': #333,
+    'color-font-logo': #fff,
+    'color-font-menu-base': rgb(255 255 255 / 60%),
+    'color-font-menu-active': #fff,
+    'color-shadow': rgb(0 21 41 / 12%),
+  ),
+  $frame
+);
+
+$frameLight: () !default;
+$frameLight: map.merge(
+  (
+    'color-bg-base': #fff,
+    'color-bg-logo': #fff,
+    'color-bg-menu-active': #d1e7ff,
+    'color-bg-menu-item-base': #d1e7ff,
+    'color-bg-menu-item-border': #1b85ff,
+    'color-font-base': #333,
+    'color-font-logo': #333,
+    'color-font-menu-base': #666,
+    'color-font-menu-active': #333,
+    'color-shadow': rgb(0 21 41 / 12%),
+  ),
+  $frameLight
+);

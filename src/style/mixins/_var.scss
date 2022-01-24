@@ -1,0 +1,16 @@
+@use 'sass:map';
+
+@forward 'config';
+@use 'config';
+@use '../var';
+
+// set all css var for component by map
+@mixin set-var($--variables) {
+  @each $attribute, $value in $--variables {
+    --hg-frame-#{$attribute}: #{$value};
+  }
+}
+
+@function get-var($variable) {
+  @return var(--hg-frame-#{$variable});
+}

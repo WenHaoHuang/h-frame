@@ -9,6 +9,7 @@ yarn-error.log*
 node_modules
 yarn.lock
 package-lock.json
-/lib/
-/dist/
+pnpm-lock.yaml
+/dist/lib/
+/dist/types/
 .cache

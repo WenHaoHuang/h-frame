@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "noLib": false,
+    "target": "es6",
+    "sourceMap": true,
+    "lib": ["ESNext", "DOM"],
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "types": ["element-plus/global"],
+    "typeRoots": ["./src/**/*"]
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "**/__test__",
+    "dist/**",
+    "packages/*/es",
+    "packages/*/lib"
+  ]
+}
