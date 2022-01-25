@@ -12,6 +12,8 @@ const HFrame: Plugin = {
 
 export { Page, Frame }
 
+export const install = HFrame.install;
+
 export default HFrame
 
 export * from './page'
