@@ -1,6 +1,6 @@
 {
   "name": "@hg-ui/h-frame",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "基于element-plus的后台管理系统框架快速搭建组件",
   "main": "lib/index.js",
   "module": "lib/index.js",

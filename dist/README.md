@@ -1,6 +1,6 @@
-## Frame 布局框架
+## frame
 
-通过简单配置，迅速简便地完成项目布局框架。
+页面框架
 
 ### 基础应用
 
@@ -112,7 +112,6 @@ export default defineComponent({
           },
         ],
       },
-      { name: '外链管理', icon: Connection, href: 'https://www.baidu.com' },
       { name: '系统管理', path: '/demo/system', icon: Tools, children: [{ name: '异常管理', path: '/demo/system/unusual' }] },
       { name: '管理', icon: Setting, path: '/page' },
     ])
@@ -167,7 +166,7 @@ export default defineComponent({
       menuList,
       commandList,
       commands,
-      menuPostion: 'side',
+      menuPostion: 'top',
       defaultActive: '/demo/alarm/policy/11',
       userName: '李诗情',
       theme,
@@ -290,7 +289,6 @@ export default defineComponent({
           },
         ],
       },
-      { name: '外链管理', icon: Connection, href: 'https://www.baidu.com' },
       { name: '系统管理', path: '/demo/system', icon: Tools, children: [{ name: '异常管理', path: '/demo/system/unusual' }] },
       { name: '管理', icon: Setting, path: '/page' },
     ])
@@ -345,7 +343,7 @@ export default defineComponent({
       menuList,
       commandList,
       commands,
-      menuPostion: 'side',
+      menuPostion: 'top',
       defaultActive: '/demo/alarm/policy/11',
       userName: '李诗情',
       theme,
