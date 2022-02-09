@@ -1,6 +1,6 @@
 {
-  "name": "@hg-ui/frame",
-  "version": "0.0.0",
+  "name": "@hg-ui/h-frame",
+  "version": "0.1.4",
   "description": "页面框架",
   "scripts": {
     "bootstrap": "pnpm install",
