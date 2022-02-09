@@ -1,14 +1,10 @@
 {
   "name": "@hg-ui/h-frame",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "基于element-plus的后台管理系统框架快速搭建组件",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "types/index.d.ts",
-  "files": [
-    "lib",
-    "types"
-  ],
   "keywords": [
     "vue",
     "component",
@@ -35,10 +31,10 @@
     "not ie <= 8"
   ],
   "peerDependencies": {
-    "vue": "3.2.30",
-    "element-plus": "2.0.1",
-    "@element-plus/icons-vue": "0.2.6",
-    "vue-router": "4.0.12"
+    "vue": "^3.2.30",
+    "element-plus": "^2.0.1",
+    "@element-plus/icons-vue": "^0.2.6",
+    "vue-router": "^4.0.12"
   },
   "dependencies": {},
   "devDependencies": {},
