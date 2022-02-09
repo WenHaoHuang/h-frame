@@ -16,8 +16,8 @@
         >
           <slot name="menu">
             <menu-default
-              :menu-list="menuList"
               mode="horizontal"
+              :menu-list="menuList"
               :default-active="defaultActive"
             />
           </slot>
@@ -104,6 +104,7 @@
             style="height:100%;"
           >
             <menu-default
+              mode="vertical"
               :menu-list="menuList"
               :default-active="defaultActive"
             />
@@ -123,7 +124,7 @@ import {
   getCurrentInstance,
 } from 'vue'
 import type { RouteLocation } from 'vue-router'
-import { frameProps, frameEmits } from './main'
+import { frameProps, frameEmits } from './types-main'
 import MenuDefault from './menu-default.jsx'
 import { SwitchButton, CaretBottom } from '@element-plus/icons-vue'
 

@@ -3,18 +3,16 @@ import Page from './page.vue'
 
 import type { App, Plugin } from 'vue'
 
-const HFrame: Plugin = {
-  install: (app: App) => {
+export const HFrame: Plugin = {
+  install: (app: App): void => {
     app.component(Frame.name, Frame)
     app.component(Page.name, Page)
   },
 }
 
-export { Page, Frame }
-
-export const install = HFrame.install;
+export { Frame, Page }
 
 export default HFrame
 
-export * from './page'
-export * from './main'
+export * from './types-main'
+export * from './types-page'

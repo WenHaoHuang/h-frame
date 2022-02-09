@@ -6,6 +6,7 @@
 @use 'reset.scss' as *;
 
 @include b(frame) {
+
   @include set-var($frame);
   &.theme-light {
     @include set-var($frameLight);
@@ -29,6 +30,15 @@
     justify-content: space-between;
     height: get-var('height-header');
   }
+  @include m(header__menu) {
+    flex: 1;
+    .el-menu {
+      &--horizontal {
+        background-color: transparent;
+        border-bottom: 0 none;
+      }
+    }
+  }
   @include m(header__side) {
     display: flex;
     align-items: center;
@@ -42,6 +52,10 @@
     padding: 0 10px;
     cursor: pointer;
     > .el-avatar {
+      --el-avatar-size: 24px !important;
+
+      width: var(--el-avatar-size, 24px);
+      height: var(--el-avatar-size, 24px);
       background-color: var(--el-color-primary, #1b85ff)
     }
   }
@@ -110,7 +124,7 @@
     height: 100%;
     overflow: hidden;
   }
-  @include m(menu) {
+  @include m(menu-vertical) {
     &,
     .el-menu {
       --el-menu-active-color: var(--hg-frame-color-font-menu-active);
@@ -122,7 +136,7 @@
       --el-menu-item-hover-fill: var(--hg-frame-color-bg-menu-item-base);
     }
   }
-  @include m(menu) {
+  @include m(menu-vertical) {
     border-right: 0 none;
     > .el-menu-item {
       padding-left: 11px !important;
@@ -156,6 +170,12 @@
     .el-sub-menu .el-menu-item {
       height: var(--el-menu-item-height);
       line-height: var(--el-menu-item-height);
+    }
+  }
+  @include m(menu-horizontal) {
+    &,
+    .el-menu {
+      --el-menu-item-height: 46px;
     }
   }
 }

@@ -71,13 +71,13 @@
 </template>
 
 <script lang="ts">
-import { 
+import {
   defineComponent,
   computed,
   getCurrentInstance,
 } from 'vue'
-import { pageProps, pageEmits } from './page'
-import type { CommandType, Style } from './page'
+import { pageProps, pageEmits } from './types-page'
+import type { CommandType, Style } from './types-page'
 import type { RouteLocation } from 'vue-router'
 
 import './style/page.scss'

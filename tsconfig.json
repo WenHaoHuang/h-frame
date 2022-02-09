@@ -24,8 +24,6 @@
   "exclude": [
     "node_modules",
     "**/__test__",
-    "dist/**",
-    "packages/*/es",
-    "packages/*/lib"
+    "dist/**"
   ]
 }

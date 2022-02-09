@@ -58,8 +58,9 @@ export default defineComponent({
   render() {
     return (
       <el-menu
-        class="h-frame--menu"
+        class={["h-frame--menu", `h-frame--menu-${this.mode}`]}
         mode={this.mode}
+        menuTrigger="click"
         defaultActive={this.defaultActive}
         router={true}
         uniqueOpened={true}

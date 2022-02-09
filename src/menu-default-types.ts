@@ -13,7 +13,7 @@ export type MenuItem = {
 export const menuProps = buildProps({
   mode: buildProp({
     type: String,
-    values: ['horizontal ', 'vertical'],
+    values: ['vertical', 'horizontal'],
     default: 'vertical',
   } as const),
   defaultActive: {

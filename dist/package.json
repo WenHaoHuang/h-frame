@@ -2,26 +2,20 @@
   "name": "@hg-ui/h-frame",
   "version": "0.1.4",
   "description": "基于element-plus的后台管理系统框架快速搭建组件",
-  "exports": {
-    ".": {
-      "require": "./lib/index.umd.js",
-      "import": "./lib/index.es.js"
-    },
-    "./es": "./lib/index.es.js",
-    "./umd": "./lib/index.umd.js",
-    "./index.css": "./lib/index.css"
-  },
-  "main": "lib/index.umd.js",
-  "module": "lib/index.es.js",
-  "style": "lib/index.css",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
   "types": "types/index.d.ts",
+  "files": [
+    "lib",
+    "types"
+  ],
   "keywords": [
     "vue",
     "component",
     "frame",
     "page"
   ],
-  "author": "WenHao.Huang(huangwenhao23@163.com)",
+  "author": "wenhao.huang(huangwenhao23@163.com)",
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -41,8 +35,10 @@
     "not ie <= 8"
   ],
   "peerDependencies": {
-    "vue": "3.2.26",
-    "element-plus": "1.3.0-beta.7"
+    "vue": "3.2.30",
+    "element-plus": "2.0.1",
+    "@element-plus/icons-vue": "0.2.6",
+    "vue-router": "4.0.12"
   },
   "dependencies": {},
   "devDependencies": {},

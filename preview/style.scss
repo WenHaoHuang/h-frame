@@ -1,5 +1,22 @@
 .wrapper-preview {
   padding: 20px 30px;
+  > table {
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
+    th, td {
+      padding: 12px 10px;
+    border: 1px solid #ebebeb;
+    }
+    th {
+      font-weight: 400;
+      text-align: left;
+      background-color: #f4f7fa;
+    }
+  }
+  > h2 {
+    font-weight: 500;
+  }
 }
 .demo-block {
   border: 1px solid #ebebeb;
